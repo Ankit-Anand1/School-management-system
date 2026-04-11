@@ -7,6 +7,7 @@ import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
+import { API_URL } from '../config';
 
 const StudentLogin = () => {
   const navigate = useNavigate();
@@ -22,9 +23,9 @@ const StudentLogin = () => {
     setError('');
     setLoading(true);
     try {
-      const res = await axios.post('http://localhost:5001/api/auth/student-login', { email, password });
+      const res = await axios.post(`${API_URL}/auth/student-login`, { email, password });
       // Fetch full user data via /me
-      const meRes = await axios.get('http://localhost:5001/api/auth/me', {
+      const meRes = await axios.get(`${API_URL}/auth/me`, {
         headers: { Authorization: `Bearer ${res.data.token}` }
       });
       login(res.data.token, meRes.data.data);
@@ -45,12 +46,12 @@ const StudentLogin = () => {
         return;
       }
 
-      const res = await axios.post('http://localhost:5001/api/auth/google-login', {
+      const res = await axios.post(`${API_URL}/auth/google-login`, {
         name: decoded.name,
         email: decoded.email,
         googleId: decoded.sub
       });
-      const meRes = await axios.get('http://localhost:5001/api/auth/me', {
+      const meRes = await axios.get(`${API_URL}/auth/me`, {
         headers: { Authorization: `Bearer ${res.data.token}` }
       });
       login(res.data.token, meRes.data.data);

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, Edit2, Trash2, User, Mail, Phone, MapPin, BookOpen, Calendar, Users2 } from 'lucide-react';
 import axios from 'axios';
 
-const API = 'http://localhost:5001/api';
+import { API_URL as API } from '../config';
 
 const AdminStudentView = () => {
   const navigate = useNavigate();

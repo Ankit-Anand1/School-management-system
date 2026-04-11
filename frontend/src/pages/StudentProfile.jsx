@@ -4,8 +4,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
+import { API_URL as API } from '../config';
 
-const API = 'http://localhost:5001/api';
+
 
 const StudentProfile = () => {
   const { user, refreshUser } = useAuth();

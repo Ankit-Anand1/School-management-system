@@ -5,6 +5,7 @@ import { ShieldCheck, Lock, Mail, ChevronRight, User, Sun, Moon } from 'lucide-r
 import axios from 'axios';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
+import { API_URL } from '../config';
 
 const AdminSignup = () => {
   const navigate = useNavigate();
@@ -21,8 +22,8 @@ const AdminSignup = () => {
     setError('');
     setLoading(true);
     try {
-      const res = await axios.post('http://localhost:5001/api/auth/admin-signup', { name, email, password });
-      const meRes = await axios.get('http://localhost:5001/api/auth/me', {
+      const res = await axios.post(`${API_URL}/auth/admin-signup`, { name, email, password });
+      const meRes = await axios.get(`${API_URL}/auth/me`, {
         headers: { Authorization: `Bearer ${res.data.token}` }
       });
       login(res.data.token, meRes.data.data);

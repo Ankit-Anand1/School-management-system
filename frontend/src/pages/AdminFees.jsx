@@ -3,6 +3,7 @@ import { CreditCard, Filter, Plus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 import { useTheme } from '../context/ThemeContext';
+import { API_URL } from '../config';
 
 const AdminFees = () => {
   const { isDark } = useTheme();
@@ -23,8 +24,8 @@ const AdminFees = () => {
       const token = localStorage.getItem('token');
       const headers = { Authorization: `Bearer ${token}` };
       const [feesRes, studentsRes] = await Promise.all([
-        axios.get('http://localhost:5001/api/fees', { headers }),
-        axios.get('http://localhost:5001/api/students', { headers })
+        axios.get(`${API_URL}/fees`, { headers }),
+        axios.get(`${API_URL}/students`, { headers })
       ]);
       setFees(feesRes.data.data);
       setStudents(studentsRes.data.data);
@@ -39,7 +40,7 @@ const AdminFees = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:5001/api/fees', newFee, {
+      await axios.post(`${API_URL}/fees`, newFee, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setShowAddModal(false);

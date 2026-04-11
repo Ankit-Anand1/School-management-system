@@ -3,6 +3,7 @@ import axios from 'axios';
 import { motion } from 'framer-motion';
 import { CalendarDays, Plus } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import { API_URL } from '../config';
 
 const AdminAttendance = () => {
   const { isDark } = useTheme();
@@ -25,8 +26,8 @@ const AdminAttendance = () => {
       const token = localStorage.getItem('token');
       const headers = { Authorization: `Bearer ${token}` };
       const [attRes, stdRes] = await Promise.all([
-        axios.get('http://localhost:5001/api/attendance', { headers }),
-        axios.get('http://localhost:5001/api/students', { headers })
+        axios.get(`${API_URL}/attendance`, { headers }),
+        axios.get(`${API_URL}/students`, { headers })
       ]);
       setAttendance(attRes.data.data);
       setStudents(stdRes.data.data);
@@ -41,7 +42,7 @@ const AdminAttendance = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:5001/api/attendance', newAttendance, {
+      await axios.post(`${API_URL}/attendance`, newAttendance, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setShowAddModal(false);

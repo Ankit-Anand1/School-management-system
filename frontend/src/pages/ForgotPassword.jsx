@@ -4,6 +4,8 @@ import axios from 'axios';
 import { Mail, ChevronRight, Sun, Moon } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 
+import { API_URL } from '../config';
+
 const ForgotPassword = () => {
   const { isDark, toggleTheme } = useTheme();
   const [email, setEmail] = useState('');
@@ -15,7 +17,7 @@ const ForgotPassword = () => {
     setLoading(true);
     setMessage({ type: '', text: '' });
     try {
-      const res = await axios.post('http://localhost:5001/api/auth/forgot-password', { email });
+      const res = await axios.post(`${API_URL}/auth/forgot-password`, { email });
       setMessage({ type: 'success', text: res.data.message });
     } catch (error) {
       setMessage({ type: 'error', text: error.response?.data?.message || 'Error processing request' });

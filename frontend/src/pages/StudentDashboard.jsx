@@ -8,8 +8,9 @@ import axios from 'axios';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Area, AreaChart, BarChart, Bar } from 'recharts';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
+import { API_URL as API } from '../config';
 
-const API = 'http://localhost:5001/api';
+
 
 const StudentDashboard = () => {
   const navigate = useNavigate();

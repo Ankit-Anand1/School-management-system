@@ -3,6 +3,7 @@ import axios from 'axios';
 import { motion } from 'framer-motion';
 import { CalendarDays } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import { API_URL } from '../config';
 
 const StudentAttendance = () => {
   const { isDark } = useTheme();
@@ -19,7 +20,7 @@ const StudentAttendance = () => {
   const fetchAttendance = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5001/api/attendance', {
+      const res = await axios.get(`${API_URL}/attendance`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setAttendance(res.data.data);

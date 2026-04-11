@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, Edit2, User, Mail, BookOpen, MapPin, Users2, ShieldCheck } from 'lucide-react';
 import axios from 'axios';
 
-const API = 'http://localhost:5001/api';
+import { API_URL as API } from '../config';
 
 const AdminStudentEdit = () => {
   const navigate = useNavigate();

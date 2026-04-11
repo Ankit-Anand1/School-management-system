@@ -3,6 +3,7 @@ import { CreditCard, Download } from 'lucide-react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
 import { useTheme } from '../context/ThemeContext';
+import { API_URL } from '../config';
 
 const StudentFees = () => {
   const { isDark } = useTheme();
@@ -18,7 +19,7 @@ const StudentFees = () => {
   const fetchFees = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5001/api/fees', {
+      const res = await axios.get(`${API_URL}/fees`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setFees(res.data.data);

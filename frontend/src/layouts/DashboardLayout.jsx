@@ -20,8 +20,9 @@ import {
   Menu
 } from 'lucide-react';
 import axios from 'axios';
+import { API_URL as API } from '../config';
 
-const API = 'http://localhost:5001/api';
+
 
 const DashboardLayout = ({ role }) => {
   const navigate = useNavigate();

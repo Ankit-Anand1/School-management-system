@@ -7,8 +7,9 @@ import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, PieChart, Pie, Cell } from 'recharts';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
+import { API_URL as API } from '../config';
 
-const API = 'http://localhost:5001/api';
+
 
 const ModalWrapper = ({ children, onClose }) => (
   <div
