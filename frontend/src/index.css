@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans antialiased bg-gray-50 text-gray-800;
+  }
+  body.dark-mode {
+    @apply bg-[#0a0a1a] text-white;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-white/10 backdrop-blur-md border border-white/20;
+  }
+}
+
+/* ===== Landing Page Specific Styles ===== */
+
+/* Light Mode Gradient Background */
+.landing-bg-light {
+  background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 25%, #fdfbfb 50%, #e0c3fc 75%, #8ec5fc 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+}
+
+/* Dark Mode Gradient Background */
+.landing-bg-dark {
+  background: linear-gradient(135deg, #09090b 0%, #171720 25%, #2a113f 50%, #0d1b2a 75%, #000000 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Animated gradient text */
+.gradient-text-animated {
+  background: linear-gradient(270deg, #6366f1, #ec4899, #f59e0b, #10b981, #6366f1);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientText 6s ease infinite;
+}
+
+@keyframes gradientText {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Mesh gradient orbs for landing */
+.mesh-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.5;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Feature card hover glow */
+.feature-card-glow {
+  position: relative;
+  overflow: hidden;
+}
+.feature-card-glow::before {
+  content: '';
+  position: absolute;
+  top: -2px; left: -2px; right: -2px; bottom: -2px;
+  background: linear-gradient(135deg, #6366f1, #ec4899, #f59e0b, #10b981);
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.feature-card-glow:hover::before {
+  opacity: 1;
+}
+
+/* Smooth scrollbar for dark mode */
+.dark-mode::-webkit-scrollbar {
+  width: 8px;
+}
+.dark-mode::-webkit-scrollbar-track {
+  background: #0a0a1a;
+}
+.dark-mode::-webkit-scrollbar-thumb {
+  background: #2D2460;
+  border-radius: 4px;
+}
