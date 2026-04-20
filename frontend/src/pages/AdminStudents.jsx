@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Plus, Eye, Edit2, Trash2, Search, Users } from 'lucide-react';
+import { Plus, Eye, Edit2, Trash2, Search, Users, BookOpen } from 'lucide-react';
 import axios from 'axios';
 import { useTheme } from '../context/ThemeContext';
 import { API_URL as API } from '../config';
@@ -13,8 +13,9 @@ const AdminStudents = () => {
   const navigate = useNavigate();
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState('');
+  const [search, setSearch]           = useState('');
   const [deleteConfirm, setDeleteConfirm] = useState(null);
+  const [filterClass, setFilterClass]   = useState('');
 
   const getHeaders = () => ({ Authorization: `Bearer ${localStorage.getItem('token')}` });
 
@@ -42,11 +43,20 @@ const AdminStudents = () => {
     }
   };
 
-  const filtered = students.filter(s =>
-    s.name?.toLowerCase().includes(search.toLowerCase()) ||
-    s.email?.toLowerCase().includes(search.toLowerCase()) ||
-    s.course?.toLowerCase().includes(search.toLowerCase())
+  // Unique classes
+  const classes = useMemo(
+    () => [...new Set(students.map(s => s.course).filter(Boolean))].sort(),
+    [students]
   );
+
+  const filtered = students.filter(s => {
+    const matchSearch =
+      s.name?.toLowerCase().includes(search.toLowerCase()) ||
+      s.email?.toLowerCase().includes(search.toLowerCase()) ||
+      s.course?.toLowerCase().includes(search.toLowerCase());
+    const matchClass = !filterClass || s.course === filterClass;
+    return matchSearch && matchClass;
+  });
 
   const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.06 } } };
   const itemVariants = { hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0, transition: { duration: 0.3 } } };
@@ -82,6 +92,41 @@ const AdminStudents = () => {
           className={`w-full pl-11 pr-4 py-3 border rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-300 ${isDark ? 'bg-[#141928] border-white/5 text-white placeholder-gray-600' : 'bg-white border-gray-200'}`}
         />
       </motion.div>
+
+      {/* Class-wise Filter Pills */}
+      {classes.length > 0 && (
+        <motion.div variants={itemVariants} className={`rounded-[20px] p-4 border ${isDark ? 'bg-[#141928] border-white/5' : 'bg-white border-gray-100'}`}>
+          <div className="flex items-center gap-2 mb-3">
+            <BookOpen className={`w-4 h-4 ${isDark ? 'text-indigo-400' : 'text-indigo-600'}`} />
+            <span className={`text-xs font-bold uppercase tracking-widest ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Filter by Class</span>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={() => setFilterClass('')}
+              className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
+                !filterClass
+                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-500/30'
+                  : isDark ? 'bg-white/5 text-gray-400 hover:bg-white/10' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+              }`}>
+              All <span className="ml-1 opacity-70">({students.length})</span>
+            </button>
+            {classes.map(cls => {
+              const count = students.filter(s => s.course === cls).length;
+              return (
+                <button key={cls}
+                  onClick={() => setFilterClass(cls)}
+                  className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
+                    filterClass === cls
+                      ? 'bg-indigo-600 text-white shadow-md shadow-indigo-500/30'
+                      : isDark ? 'bg-white/5 text-gray-400 hover:bg-white/10' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                  }`}>
+                  {cls} <span className="ml-1 opacity-70">({count})</span>
+                </button>
+              );
+            })}
+          </div>
+        </motion.div>
+      )}
 
       {/* Stats Row */}
       <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-3 gap-4">
