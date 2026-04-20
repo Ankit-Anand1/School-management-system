@@ -275,79 +275,149 @@ const LandingPage = () => {
         </div>
 
         {/* Floating Preview Cards — Visual showcase */}
-        <div className="relative max-w-4xl w-full h-[32rem] sm:h-56 mx-auto mt-10 md:mt-20">
-          {/* Card 1 - Attendance */}
-          <div ref={el => floatingCardsRef.current[0] = el}
-            className={`absolute left-4 sm:left-0 top-32 sm:top-8 w-[280px] sm:w-64 p-6 rounded-[24px] shadow-2xl backdrop-blur-2xl transition-all duration-500 border z-10
-              ${isDark ? 'bg-[#141928]/80 border-white/10 shadow-[0_0_40px_rgba(16,185,129,0.15)]' : 'bg-white/90 border-gray-100 shadow-[0_20px_40px_rgba(0,0,0,0.06)]'}`}
-            style={{ perspective: '1000px' }}>
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-500/30">
-                  <CalendarCheck className="w-5 h-5 text-white" />
-                </div>
-                <span className={`text-xs font-bold uppercase tracking-widest ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Attendance</span>
-              </div>
-              <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-            </div>
-            <p className={`text-4xl font-black tracking-tight mb-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>94.2%</p>
-            <p className={`text-[10px] font-bold uppercase tracking-widest mb-4 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>School Average</p>
-            <div className={`w-full rounded-full h-1.5 ${isDark ? 'bg-gray-800' : 'bg-gray-100'}`}>
-              <div className="bg-gradient-to-r from-emerald-400 to-emerald-500 h-1.5 rounded-full relative" style={{ width: '94%' }}>
-                 <div className="absolute top-0 right-0 w-3 h-3 bg-white rounded-full shadow-md -mt-[3px]"></div>
-              </div>
-            </div>
-          </div>
+        {/* Mobile: vertical stack | md+: absolute positioned floating cards */}
+        <div className="relative max-w-4xl w-full mx-auto mt-10 md:mt-20">
 
-          {/* Card 2 - Fees */}
-          <div ref={el => floatingCardsRef.current[1] = el}
-            className={`absolute left-1/2 -translate-x-1/2 top-0 sm:-top-6 w-[300px] sm:w-72 p-6 rounded-[24px] shadow-2xl backdrop-blur-2xl transition-all duration-500 border z-20
-              ${isDark ? 'bg-[#141928]/90 border-white/10 shadow-[0_0_50px_rgba(139,92,246,0.15)]' : 'bg-white/95 border-gray-100 shadow-[0_20px_50px_rgba(0,0,0,0.08)]'}`}
-            style={{ perspective: '1000px' }}>
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-purple-500/30">
-                  <CreditCard className="w-5 h-5 text-white" />
+          {/* Mobile layout: flex column stack */}
+          <div className="flex flex-col gap-4 md:hidden px-2">
+            {/* Card 2 - Fees (center/hero card first on mobile) */}
+            <div ref={el => floatingCardsRef.current[1] = el}
+              className={`w-full p-5 rounded-[24px] shadow-xl backdrop-blur-2xl transition-all duration-500 border
+                ${isDark ? 'bg-[#141928]/90 border-white/10' : 'bg-white/95 border-gray-100 shadow-[0_10px_30px_rgba(0,0,0,0.08)]'}`}>
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-purple-500/30">
+                    <CreditCard className="w-5 h-5 text-white" />
+                  </div>
+                  <span className={`text-xs font-bold uppercase tracking-widest ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Revenue</span>
                 </div>
-                <span className={`text-xs font-bold uppercase tracking-widest ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Revenue</span>
+                <span className="px-2 py-1 bg-emerald-500/10 text-emerald-500 rounded-lg text-[10px] font-bold flex items-center gap-1">
+                  <ArrowRight className="w-3 h-3 -rotate-45" /> +12%
+                </span>
               </div>
-              <span className="px-2 py-1 bg-emerald-500/10 text-emerald-500 rounded-lg text-[10px] font-bold flex items-center gap-1">
-                 <ArrowRight className="w-3 h-3 -rotate-45" /> +12%
-              </span>
-            </div>
-            <p className={`text-4xl font-black tracking-tight ${isDark ? 'text-white' : 'text-gray-900'}`}>₹24,500</p>
-            
-            {/* Mini graph */}
-            <div className="flex items-end gap-1.5 mt-5 h-8">
-               {[40, 60, 30, 80, 50, 90, 70].map((h, i) => (
+              <p className={`text-3xl font-black tracking-tight ${isDark ? 'text-white' : 'text-gray-900'}`}>₹24,500</p>
+              <div className="flex items-end gap-1.5 mt-4 h-8">
+                {[40, 60, 30, 80, 50, 90, 70].map((h, i) => (
                   <div key={i} className={`w-full rounded-t-sm ${i === 6 ? 'bg-purple-500' : (isDark ? 'bg-gray-800' : 'bg-gray-200')}`} style={{ height: `${h}%` }}></div>
-               ))}
+                ))}
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              {/* Card 1 - Attendance */}
+              <div ref={el => floatingCardsRef.current[0] = el}
+                className={`p-4 rounded-[20px] shadow-xl backdrop-blur-2xl transition-all duration-500 border
+                  ${isDark ? 'bg-[#141928]/80 border-white/10' : 'bg-white/90 border-gray-100 shadow-[0_10px_25px_rgba(0,0,0,0.06)]'}`}>
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-500/30 shrink-0">
+                    <CalendarCheck className="w-4 h-4 text-white" />
+                  </div>
+                  <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse ml-auto"></div>
+                </div>
+                <p className={`text-2xl font-black tracking-tight mb-0.5 ${isDark ? 'text-white' : 'text-gray-900'}`}>94.2%</p>
+                <p className={`text-[9px] font-bold uppercase tracking-widest mb-3 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>School Avg</p>
+                <div className={`w-full rounded-full h-1.5 ${isDark ? 'bg-gray-800' : 'bg-gray-100'}`}>
+                  <div className="bg-gradient-to-r from-emerald-400 to-emerald-500 h-1.5 rounded-full" style={{ width: '94%' }}></div>
+                </div>
+              </div>
+
+              {/* Card 3 - Students */}
+              <div ref={el => floatingCardsRef.current[2] = el}
+                className={`p-4 rounded-[20px] shadow-xl backdrop-blur-2xl transition-all duration-500 border
+                  ${isDark ? 'bg-[#141928]/80 border-white/10' : 'bg-white/90 border-gray-100 shadow-[0_10px_25px_rgba(0,0,0,0.06)]'}`}>
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center shadow-lg shadow-pink-500/30 shrink-0">
+                    <Users className="w-4 h-4 text-white" />
+                  </div>
+                </div>
+                <p className={`text-2xl font-black tracking-tight mb-3 ${isDark ? 'text-white' : 'text-gray-900'}`}>512</p>
+                <div className={`flex items-center justify-between rounded-xl p-2 border ${isDark ? 'bg-white/5 border-white/5' : 'bg-gray-50 border-gray-100'}`}>
+                  <div className="flex -space-x-1.5">
+                    {['bg-blue-500', 'bg-pink-500', 'bg-amber-500'].map((c, i) => (
+                      <div key={i} className={`w-6 h-6 rounded-full ${c} border-2 ${isDark ? 'border-[#141928]' : 'border-white'} flex items-center justify-center text-white font-bold text-[9px]`}>
+                        {['A', 'B', 'C'][i]}
+                      </div>
+                    ))}
+                  </div>
+                  <span className={`text-[9px] font-bold ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>+42</span>
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Card 3 - Students */}
-          <div ref={el => floatingCardsRef.current[2] = el}
-            className={`absolute right-4 sm:right-0 bottom-0 sm:top-8 w-[280px] sm:w-64 p-6 rounded-[24px] shadow-2xl backdrop-blur-2xl transition-all duration-500 border z-10
-              ${isDark ? 'bg-[#141928]/80 border-white/10 shadow-[0_0_40px_rgba(236,72,153,0.15)]' : 'bg-white/90 border-gray-100 shadow-[0_20px_40px_rgba(0,0,0,0.06)]'}`}
-            style={{ perspective: '1000px' }}>
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center shadow-lg shadow-pink-500/30">
-                  <Users className="w-5 h-5 text-white" />
+          {/* Desktop layout: absolute positioned floating cards */}
+          <div className="hidden md:block relative h-56">
+            {/* Card 1 - Attendance */}
+            <div ref={el => floatingCardsRef.current[0] = el}
+              className={`absolute left-0 top-8 w-64 p-6 rounded-[24px] shadow-2xl backdrop-blur-2xl transition-all duration-500 border z-10
+                ${isDark ? 'bg-[#141928]/80 border-white/10 shadow-[0_0_40px_rgba(16,185,129,0.15)]' : 'bg-white/90 border-gray-100 shadow-[0_20px_40px_rgba(0,0,0,0.06)]'}`}
+              style={{ perspective: '1000px' }}>
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-500/30">
+                    <CalendarCheck className="w-5 h-5 text-white" />
+                  </div>
+                  <span className={`text-xs font-bold uppercase tracking-widest ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Attendance</span>
                 </div>
-                <span className={`text-xs font-bold uppercase tracking-widest ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Students</span>
+                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+              </div>
+              <p className={`text-4xl font-black tracking-tight mb-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>94.2%</p>
+              <p className={`text-[10px] font-bold uppercase tracking-widest mb-4 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>School Average</p>
+              <div className={`w-full rounded-full h-1.5 ${isDark ? 'bg-gray-800' : 'bg-gray-100'}`}>
+                <div className="bg-gradient-to-r from-emerald-400 to-emerald-500 h-1.5 rounded-full relative" style={{ width: '94%' }}>
+                  <div className="absolute top-0 right-0 w-3 h-3 bg-white rounded-full shadow-md -mt-[3px]"></div>
+                </div>
               </div>
             </div>
-            <p className={`text-4xl font-black tracking-tight mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>512</p>
-            <div className="flex justify-between items-center bg-gray-50 dark:bg-white/5 rounded-xl p-2.5 border border-gray-100 dark:border-white/5">
-               <div className="flex -space-x-2">
-                 {['bg-blue-500', 'bg-pink-500', 'bg-amber-500'].map((c, i) => (
-                   <div key={i} className={`w-8 h-8 rounded-full ${c} border-2 ${isDark ? 'border-[#141928]' : 'border-white'} flex items-center justify-center text-white font-bold text-xs shadow-sm`}>
-                     {['A', 'B', 'C'][i]}
-                   </div>
-                 ))}
-               </div>
-               <span className={`text-xs font-bold pr-2 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>+42 New</span>
+
+            {/* Card 2 - Fees */}
+            <div ref={el => floatingCardsRef.current[1] = el}
+              className={`absolute left-1/2 -translate-x-1/2 -top-6 w-72 p-6 rounded-[24px] shadow-2xl backdrop-blur-2xl transition-all duration-500 border z-20
+                ${isDark ? 'bg-[#141928]/90 border-white/10 shadow-[0_0_50px_rgba(139,92,246,0.15)]' : 'bg-white/95 border-gray-100 shadow-[0_20px_50px_rgba(0,0,0,0.08)]'}`}
+              style={{ perspective: '1000px' }}>
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-purple-500/30">
+                    <CreditCard className="w-5 h-5 text-white" />
+                  </div>
+                  <span className={`text-xs font-bold uppercase tracking-widest ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Revenue</span>
+                </div>
+                <span className="px-2 py-1 bg-emerald-500/10 text-emerald-500 rounded-lg text-[10px] font-bold flex items-center gap-1">
+                  <ArrowRight className="w-3 h-3 -rotate-45" /> +12%
+                </span>
+              </div>
+              <p className={`text-4xl font-black tracking-tight ${isDark ? 'text-white' : 'text-gray-900'}`}>₹24,500</p>
+              <div className="flex items-end gap-1.5 mt-5 h-8">
+                {[40, 60, 30, 80, 50, 90, 70].map((h, i) => (
+                  <div key={i} className={`w-full rounded-t-sm ${i === 6 ? 'bg-purple-500' : (isDark ? 'bg-gray-800' : 'bg-gray-200')}`} style={{ height: `${h}%` }}></div>
+                ))}
+              </div>
+            </div>
+
+            {/* Card 3 - Students */}
+            <div ref={el => floatingCardsRef.current[2] = el}
+              className={`absolute right-0 top-8 w-64 p-6 rounded-[24px] shadow-2xl backdrop-blur-2xl transition-all duration-500 border z-10
+                ${isDark ? 'bg-[#141928]/80 border-white/10 shadow-[0_0_40px_rgba(236,72,153,0.15)]' : 'bg-white/90 border-gray-100 shadow-[0_20px_40px_rgba(0,0,0,0.06)]'}`}
+              style={{ perspective: '1000px' }}>
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center shadow-lg shadow-pink-500/30">
+                    <Users className="w-5 h-5 text-white" />
+                  </div>
+                  <span className={`text-xs font-bold uppercase tracking-widest ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Students</span>
+                </div>
+              </div>
+              <p className={`text-4xl font-black tracking-tight mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>512</p>
+              <div className="flex justify-between items-center bg-gray-50 dark:bg-white/5 rounded-xl p-2.5 border border-gray-100 dark:border-white/5">
+                <div className="flex -space-x-2">
+                  {['bg-blue-500', 'bg-pink-500', 'bg-amber-500'].map((c, i) => (
+                    <div key={i} className={`w-8 h-8 rounded-full ${c} border-2 ${isDark ? 'border-[#141928]' : 'border-white'} flex items-center justify-center text-white font-bold text-xs shadow-sm`}>
+                      {['A', 'B', 'C'][i]}
+                    </div>
+                  ))}
+                </div>
+                <span className={`text-xs font-bold pr-2 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>+42 New</span>
+              </div>
             </div>
           </div>
         </div>
